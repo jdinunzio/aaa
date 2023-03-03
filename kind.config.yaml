@@ -1,0 +1,30 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: sso-cluster
+networking:
+  ipFamily: ipv4
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  extraPortMappings:
+  # We want to map host ports 80 and 443 (ports in the real computer)
+  # into ports in k8s nodeport range, and do it in a specific node,
+  # so we can deploy our ingress in that node and listen into the
+  # given nodeport nodes
+  - hostPort: 80
+    containerPort: 30000
+    listenAddress: "127.0.0.1"
+    protocol: TCP
+  - hostPort: 443
+    containerPort: 30001
+    listenAddress: "127.0.0.1"
+    protocol: TCP
+  - hostPort: 15021
+    containerPort: 30002
+    listenAddress: "127.0.0.1"
+    protocol: TCP

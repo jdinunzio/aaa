@@ -1,0 +1,22 @@
+service:
+  type: NodePort
+  ports:
+  - name: http2
+    protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30000
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 443
+    nodePort: 30001
+  - name: status-port
+    protocol: TCP
+    port: 15021
+    targetPort: 15021
+    nodePort: 30002
+
+#gateway:
+#  selectorLabels:
+#    ingress-ready: "true"
