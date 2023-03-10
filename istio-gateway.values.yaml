@@ -20,3 +20,6 @@ service:
 #gateway:
 #  selectorLabels:
 #    ingress-ready: "true"
+
+nodeSelector:
+  ingress-ready: "true"
